@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import Sidebar from '../components/Sidebar';
 import Header from '../components/Header';
 import ChatWindow from '../components/ChatWindow';
+import axios from 'axios';
 
 const Chat = () => {
   const navigate = useNavigate();
@@ -12,8 +13,7 @@ const Chat = () => {
   const [email, setEmail] = useState('');
   const [loading, setLoading] = useState(false);
 
-  const API_KEY = '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';
-  const ASSISTANT_ID = 'asst_nHShaoyRQbioBsNdvmtyD4DR';
+  const apiUrl = import.meta.env.VITE_API_URL;
 
   useEffect(() => {
     const savedEmail = localStorage.getItem('email');
@@ -38,6 +38,7 @@ const Chat = () => {
   };
 
   const handleSendMessage = async (text) => {
+    const token = localStorage.getItem('token');
     const newMessage = { role: 'user', content: text };
     const updatedConvs = [...conversations];
     updatedConvs[selectedConvIndex].messages.push(newMessage);
@@ -45,72 +46,22 @@ const Chat = () => {
     setLoading(true);
 
     try {
-      // 1. Crée un nouveau thread
-      const threadRes = await fetch('https://api.openai.com/v1/threads', {
-        method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${API_KEY}`,
-          'Content-Type': 'application/json',
-          'OpenAI-Beta': 'assistants=v2'
-        }
-      });
-      const thread = await threadRes.json();
-
-      // 2. Ajoute le message utilisateur
-      await fetch(`https://api.openai.com/v1/threads/${thread.id}/messages`, {
-        method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${API_KEY}`,
-          'Content-Type': 'application/json',
-          'OpenAI-Beta': 'assistants=v2'
+      const response = await axios.post(
+        `${apiUrl}/ask-nucleocr`,
+        {
+          messages: [
+            ...updatedConvs[selectedConvIndex].messages,
+            { role: 'user', content: text }
+          ]
         },
-        body: JSON.stringify({
-          role: 'user',
-          content: text
-        })
-      });
-
-      // 3. Lance la "run"
-      const runRes = await fetch(`https://api.openai.com/v1/threads/${thread.id}/runs`, {
-        method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${API_KEY}`,
-          'Content-Type': 'application/json',
-          'OpenAI-Beta': 'assistants=v2'
-        },
-        body: JSON.stringify({
-          assistant_id: ASSISTANT_ID
-        })
-      });
-
-      const run = await runRes.json();
-
-      // 4. Attendre que la run soit complétée
-      let runStatus = run.status;
-      while (runStatus !== 'completed') {
-        await new Promise((res) => setTimeout(res, 1000)); // pause 1s
-        const statusRes = await fetch(`https://api.openai.com/v1/threads/${thread.id}/runs/${run.id}`, {
+        {
           headers: {
-            'Authorization': `Bearer ${API_KEY}`,
-            'OpenAI-Beta': 'assistants=v2'
+            Authorization: `Bearer ${token}`
           }
-        });
-        const statusData = await statusRes.json();
-        runStatus = statusData.status;
-      }
-
-      // 5. Récupérer les messages
-      const msgRes = await fetch(`https://api.openai.com/v1/threads/${thread.id}/messages`, {
-        headers: {
-          'Authorization': `Bearer ${API_KEY}`,
-          'OpenAI-Beta': 'assistants=v2'
         }
-      });
-      const msgData = await msgRes.json();
-      const assistantMessages = msgData.data.filter(m => m.role === 'assistant');
-      const lastMessage = assistantMessages[0]?.content[0]?.text?.value || 'Réponse vide.';
+      );
 
-      // 6. Ajouter la réponse dans la conversation
+      const lastMessage = response.data.answer || 'Réponse vide.';
       updatedConvs[selectedConvIndex].messages.push({
         role: 'assistant',
         content: lastMessage
