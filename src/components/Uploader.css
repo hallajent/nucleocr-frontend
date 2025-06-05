@@ -1,0 +1,30 @@
+.uploader {
+  padding: 16px 24px;
+  background-color: #f5f7fa;
+  border-bottom: 1px solid #ddd;
+}
+
+.upload-label {
+  display: inline-block;
+  padding: 8px 16px;
+  background-color: #007bff;
+  color: white;
+  font-weight: 600;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.upload-label:hover {
+  background-color: #0056b3;
+}
+
+.upload-input {
+  display: none; /* caché mais accessible via label */
+}
+
+.file-name {
+  margin-top: 10px;
+  font-size: 14px;
+  color: #333;
+}

@@ -1,0 +1,295 @@
+/* ===================== */
+/* 1) Polices et reset   */
+/* ===================== */
+
+/* Import de la police “Inter” depuis Google Fonts */
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
+
+/* Reset très minimal pour margin/padding */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Appliquer “Inter” à tout le document */
+body {
+  font-family: "Inter", sans-serif;
+  background-color: #f0f4f8;  /* un gris très clair de fond */
+  color: #1f2937;             /* gris très foncé pour le texte */
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* ============================== */
+/* 2) Conteneur principal (wrapper) */
+/* ============================== */
+
+.chat-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  padding: 16px;
+}
+
+/* ========================= */
+/* 3) Boîte de chat entière  */
+/* ========================= */
+
+.chat-container {
+  width: 100%;
+  max-width: 800px;
+  height: 100%;
+  max-height: 90vh;
+  background-color: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* =============== */
+/* 4) Header chat  */
+/* =============== */
+
+.chat-header {
+  background-color: #2563eb;  /* bleu plus soutenu */
+  color: #ffffff;
+  padding: 12px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.chat-header h1 {
+  font-size: 1.25rem;  /* 20px */
+  font-weight: 600;
+}
+
+.toggle-dark {
+  background-color: #ffffff;
+  color: #2563eb;
+  border: none;
+  border-radius: 4px;
+  padding: 4px 8px;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.toggle-dark:hover {
+  background-color: #e2e8f0;
+}
+
+/* ===================== */
+/* 5) Zone des messages  */
+/* ===================== */
+
+.messages-area {
+  flex-grow: 1;
+  padding: 16px;
+  background-color: #f9fafb;  /* gris très clair */
+  overflow-y: auto;
+}
+
+.message-bubble {
+  max-width: 75%;
+  padding: 12px;
+  border-radius: 12px;
+  margin-bottom: 12px;
+  line-height: 1.4;
+  white-space: pre-wrap;  /* pour respecter sauts de ligne */
+  font-size: 0.9375rem;    /* 15px */
+}
+
+/* Bulle utilisateur (alignée à droite) */
+.message-user {
+  background-color: #bfdbfe;  /* bleu clair */
+  color: #1e3a8a;             /* bleu foncé pour le texte */
+  margin-left: auto;
+  border-bottom-right-radius: 0;
+}
+
+/* Bulle assistant (alignée à gauche) */
+.message-assistant {
+  background-color: #e5e7eb;  /* gris clair */
+  color: #374151;             /* gris foncé pour le texte */
+  margin-right: auto;
+  border-bottom-left-radius: 0;
+}
+
+/* ========================= */
+/* 6) Zone de saisie / input */
+/* ========================= */
+
+.input-area {
+  padding: 12px 16px;
+  background-color: #ffffff;
+  border-top: 1px solid #e5e7eb;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* Aperçu des fichiers chargés */
+.file-preview-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.file-item {
+  background-color: #e5e7eb;
+  color: #1f2937;
+  display: flex;
+  align-items: center;
+  padding: 4px 8px;
+  border-radius: 16px;
+  font-size: 0.75rem; /* 12px */
+}
+
+.file-item span {
+  margin-right: 4px;
+}
+
+.file-item button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 0.75rem;
+  color: #dc2626; /* rouge pour bouton suppr */
+}
+
+/* Conteneur bouton upload + input texte + bouton envoyer */
+.input-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Bouton “Upload” (icône) */
+.upload-label {
+  display: inline-flex;
+  background-color: #e5e7eb;
+  padding: 8px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.upload-label:hover {
+  background-color: #d1d5db;
+}
+
+.upload-label svg {
+  width: 20px;
+  height: 20px;
+  color: #374151;
+}
+
+/* Input de type text */
+.chat-input {
+  flex-grow: 1;
+  padding: 8px 12px;
+  border: 1px solid #cbd5e1;
+  border-radius: 20px;
+  font-size: 0.9375rem; /* 15px */
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.chat-input:focus {
+  border-color: #2563eb;
+}
+
+/* Bouton Envoyer */
+.send-button {
+  background-color: #2563eb;
+  color: #ffffff;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 0.9375rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.send-button:hover {
+  background-color: #1e40af;
+}
+
+/* ========================= */
+/* 7) Mode sombre (“dark”)   */
+/* ========================= */
+
+.dark body {
+  background-color: #1f2937; /* gris très foncé */
+  color: #f3f4f6;            /* texte clair */
+}
+
+.dark .chat-container {
+  background-color: #374151; /* gris moyen foncé */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.dark .chat-header {
+  background-color: #1e40af; /* bleu foncé */
+}
+
+.dark .toggle-dark {
+  background-color: #111827;
+  color: #93c5fd; /* bleu clair text */
+}
+.dark .toggle-dark:hover {
+  background-color: #1f2937;
+}
+
+.dark .messages-area {
+  background-color: #4b5563; /* gris foncé */
+}
+
+.dark .message-user {
+  background-color: #1e3a8a; /* bleu très foncé */
+  color: #dbeafe;            /* bleu clair texte */
+}
+
+.dark .message-assistant {
+  background-color: #6b7280; /* gris foncé */
+  color: #f3f4f6;            /* texte clair */
+}
+
+.dark .input-area {
+  background-color: #374151; /* gris moyen foncé */
+  border-top: 1px solid #4b5563;
+}
+
+.dark .file-item {
+  background-color: #6b7280;
+  color: #f3f4f6;
+}
+
+.dark .upload-label {
+  background-color: #4b5563;
+}
+.dark .upload-label:hover {
+  background-color: #6b7280;
+}
+
+.dark .chat-input {
+  background-color: #4b5563;
+  border: 1px solid #6b7280;
+  color: #f3f4f6;
+}
+
+.dark .chat-input:focus {
+  border-color: #93c5fd;
+}
+
+.dark .send-button {
+  background-color: #1e40af;
+}
+.dark .send-button:hover {
+  background-color: #1e3a8a;
+}

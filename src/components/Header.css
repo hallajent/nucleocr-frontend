@@ -1,0 +1,30 @@
+.header {
+  background-color: #fefefe;
+  border-bottom: 1px solid #ddd;
+  padding: 16px 24px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.03);
+}
+
+.header-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.app-title {
+  font-size: 24px;
+  font-weight: bold;
+  color: #222;
+  margin-bottom: 4px;
+}
+
+.app-subtitle {
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 6px;
+}
+
+.user-welcome {
+  font-size: 14px;
+  font-weight: 600;
+  color: #007bff;
+}

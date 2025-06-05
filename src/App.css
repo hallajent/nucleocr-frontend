@@ -1,0 +1,66 @@
+/* GLOBAL RESET */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body, #root {
+  height: 100%;
+  width: 100%;
+  font-family: Arial, sans-serif;
+  background-color: #f5f6f8;
+  overflow: hidden;
+}
+
+/* SIDEBAR (inchangée) */
+.sidebar {
+  width: 250px;
+  background-color: #007bff;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.sidebar-header {
+  padding: 16px;
+  border-bottom: 1px solid #0056b3;
+}
+
+.new-chat-btn {
+  width: 100%;
+  padding: 10px;
+  background-color: white;
+  color: #007bff;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.new-chat-btn:hover {
+  background-color: #e2e6ea;
+}
+
+.conversation-list {
+  flex: 1;
+  overflow-y: auto;
+  padding: 8px;
+}
+
+.conversation-item {
+  padding: 10px;
+  border-radius: 6px;
+  margin-bottom: 6px;
+  cursor: pointer;
+  background-color: rgba(255, 255, 255, 0.1);
+  transition: background 0.2s ease;
+}
+
+.conversation-item:hover {
+  background-color: rgba(255, 255, 255, 0.25);
+}
+
