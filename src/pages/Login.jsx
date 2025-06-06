@@ -1,8 +1,11 @@
-import { useState } from 'react';
+// src/pages/Login.jsx
+import { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import lottie from 'lottie-web';
 import api from '../services/auth';
 import logo from '../assets/logo.png';
+import loaderAnimation from '../assets/animations/loader.json';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -10,8 +13,22 @@ const Login = () => {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-  // 👇 Forcer git à voir une modification
-  console.log('Chargement de la page Login');
+  // Référence du conteneur Lottie
+  const animationContainer = useRef(null);
+
+  // Initialise Lottie au montage du composant
+  useEffect(() => {
+    if (animationContainer.current) {
+      const anim = lottie.loadAnimation({
+        container: animationContainer.current,
+        renderer: 'svg',
+        loop: true,
+        autoplay: true,
+        animationData: loaderAnimation,
+      });
+      return () => anim.destroy();
+    }
+  }, []);
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -20,10 +37,8 @@ const Login = () => {
       const token = await api.login(email, password);
       localStorage.setItem('token', token);
       localStorage.setItem('email', email);
-
       const username = email.split('@')[0];
       localStorage.setItem('username', username);
-
       navigate('/chat');
     } catch (error) {
       alert('Identifiants invalides');
@@ -38,18 +53,27 @@ const Login = () => {
         initial={{ opacity: 0, y: 40 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, ease: 'easeOut' }}
-        className="bg-white shadow-xl rounded-xl p-10 w-full max-w-md text-center"
+        className="bg-white shadow-xl rounded-xl p-10 w-full max-w-md text-center overflow-hidden"
       >
+        {/* Conteneur pour l’animation Lottie */}
+        <div
+          ref={animationContainer}
+          className="w-32 h-32 mx-auto mb-4"
+        ></div>
+
+        {/* Logo animé avec Framer Motion */}
         <motion.img
           src={logo}
           alt="Logo"
           className="h-16 mx-auto mb-4"
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
-          transition={{ delay: 0.2, duration: 0.4 }}
+          transition={{ delay: 0.3, duration: 0.5 }}
         />
 
-        <h1 className="text-3xl font-bold text-blue-700 mb-1">🔬 NucleoCR AI</h1>
+        <h1 className="text-3xl font-bold text-blue-700 mb-1">
+          🔬 NucleoCR AI
+        </h1>
         <p className="text-gray-500 text-sm mb-8">
           Votre assistant IA pour la rédaction de comptes rendus
         </p>
@@ -75,7 +99,9 @@ const Login = () => {
             type="submit"
             disabled={loading}
             className={`w-full py-3 rounded-lg font-semibold text-white transition ${
-              loading ? 'bg-blue-300 cursor-not-allowed' : 'bg-blue-600 hover:bg-blue-700'
+              loading
+                ? 'bg-blue-300 cursor-not-allowed'
+                : 'bg-blue-600 hover:bg-blue-700'
             }`}
           >
             {loading ? 'Connexion en cours...' : 'Connexion'}
