@@ -15,6 +15,10 @@ const Chat = () => {
 
   const apiUrl = import.meta.env.VITE_API_URL;
 
+  // Nouveau : récupérer le nom d'utilisateur pour le message de bienvenue
+  const username = localStorage.getItem('username');
+  const displayName = username === 'admin' ? 'admin' : 'Dr Hallaj';
+
   useEffect(() => {
     const savedEmail = localStorage.getItem('email');
     if (!savedEmail) {
@@ -28,6 +32,7 @@ const Chat = () => {
   const handleLogout = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('email');
+    localStorage.removeItem('username');
     navigate('/login');
   };
 
@@ -99,6 +104,11 @@ const Chat = () => {
 
         <div style={{ display: 'flex', flexDirection: 'column', flex: 1, overflow: 'hidden' }}>
           <div style={{ flex: 1, padding: '24px', overflowY: 'auto' }}>
+            {/* ✅ Message de bienvenue */}
+            <h2 style={{ fontSize: '1.25rem', fontWeight: '600', marginBottom: '1rem' }}>
+              Bienvenue {displayName}
+            </h2>
+
             <ChatWindow
               messages={currentMessages}
               onSend={handleSendMessage}
