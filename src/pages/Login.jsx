@@ -3,7 +3,9 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import api from '../services/auth';
 import logo from '../assets/logo.png';
-import loginBg from '../assets/animations/login-bg.png';
+
+// Désormais, l’image est servie depuis public/images/login-bg.png
+const loginBgUrl = '/images/login-bg.png';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -33,7 +35,6 @@ const Login = () => {
   };
 
   return (
-    // 1. Container full-screen avec image de fond
     <div
       className="
         relative
@@ -41,14 +42,14 @@ const Login = () => {
         bg-cover bg-center
         flex items-center justify-center
       "
-      style={{ backgroundImage: `url(${loginBg})` }}
+      style={{ backgroundImage: `url(${loginBgUrl})` }}
     >
-      {/* 2. Overlay sombre semi-opaque (pour faire ressortir la carte) */}
+      {/* Overlay sombre semi-opaque */}
       <div className="absolute inset-0 bg-black/50"></div>
 
-      {/* 3. Carte de connexion centrée */}
+      {/* Carte de connexion centrée */}
       <div className="relative z-10 w-full max-w-sm bg-white/80 backdrop-blur-md rounded-2xl shadow-2xl p-8">
-        {/* 3.1 Logo centré en haut de la carte */}
+        {/* Logo centré */}
         <div className="flex justify-center mb-6">
           <img
             src={logo}
@@ -57,7 +58,7 @@ const Login = () => {
           />
         </div>
 
-        {/* 3.2 Titre et sous-titre */}
+        {/* Titre et sous-titre */}
         <h2 className="text-2xl font-bold text-gray-800 text-center mb-4">
           Identifiez-vous
         </h2>
@@ -65,7 +66,7 @@ const Login = () => {
           Entrez votre identifiant et votre mot de passe
         </p>
 
-        {/* 3.3 Formulaire */}
+        {/* Formulaire */}
         <form onSubmit={handleLogin} className="space-y-4">
           <input
             type="email"
@@ -106,7 +107,7 @@ const Login = () => {
           </button>
         </form>
 
-        {/* 3.4 Lien “Mot de passe oublié ?” */}
+        {/* Lien “Mot de passe oublié ?” */}
         <p className="mt-6 text-center text-sm text-gray-700">
           <button type="button" onClick={showHelpEmail} className="hover:underline">
             Mot de passe oublié ?
