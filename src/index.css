@@ -1,9 +1,26 @@
-/* ===================== */
-/* 1) Polices et reset   */
-/* ===================== */
+/* ─────────────────────────────────────────────────── */
+/* 1) @import (doit être en tout premier, avant Tailwind) */
+/* ─────────────────────────────────────────────────── */
 
 /* Import de la police “Inter” depuis Google Fonts */
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
+
+
+/* ─────────────────────────────────────────────────── */
+/* 2) Directives Tailwind (après tout @import)       */
+/* ─────────────────────────────────────────────────── */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+/* ─────────────────────────────────────────────────── */
+/* 3) Vos styles personnalisés (reset, chat, etc.)    */
+/* ─────────────────────────────────────────────────── */
+
+/* ===================== */
+/* 1) Polices et reset   */
+/* ===================== */
 
 /* Reset très minimal pour margin/padding */
 * {

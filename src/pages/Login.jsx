@@ -1,34 +1,13 @@
 // src/pages/Login.jsx
-import { useState, useRef, useEffect } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { motion } from 'framer-motion';
-import lottie from 'lottie-web';
-import api from '../services/auth';
-import logo from '../assets/logo.png';
-import loaderAnimation from '../assets/animations/loader.json';
+import api from '../services/auth'; // Ajustez le chemin si besoin
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-
-  // Référence du conteneur Lottie
-  const animationContainer = useRef(null);
-
-  // Initialise Lottie au montage du composant
-  useEffect(() => {
-    if (animationContainer.current) {
-      const anim = lottie.loadAnimation({
-        container: animationContainer.current,
-        renderer: 'svg',
-        loop: true,
-        autoplay: true,
-        animationData: loaderAnimation,
-      });
-      return () => anim.destroy();
-    }
-  }, []);
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -47,67 +26,73 @@ const Login = () => {
     }
   };
 
+  const showHelpEmail = () => {
+    alert('alexandrehallaj.ent@gmail.com');
+  };
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-white flex items-center justify-center px-4">
-      <motion.div
-        initial={{ opacity: 0, y: 40 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, ease: 'easeOut' }}
-        className="bg-white shadow-xl rounded-xl p-10 w-full max-w-md text-center overflow-hidden"
+    <div className="relative w-full h-screen bg-gradient-to-br from-blue-50 to-white">
+      {/* Bloc centré au milieu */}
+      <div
+        className="
+          absolute top-1/2 left-1/2 
+          transform -translate-x-1/2 -translate-y-1/2
+          w-full max-w-xs 
+          bg-white rounded-lg shadow p-6 text-center
+        "
       >
-        {/* Conteneur pour l’animation Lottie */}
-        <div
-          ref={animationContainer}
-          className="w-32 h-32 mx-auto mb-4"
-        ></div>
-
-        {/* Logo animé avec Framer Motion */}
-        <motion.img
-          src={logo}
-          alt="Logo"
-          className="h-16 mx-auto mb-4"
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ delay: 0.3, duration: 0.5 }}
-        />
-
-        <h1 className="text-3xl font-bold text-blue-700 mb-1">
+        {/* Titre */}
+        <h1 className="text-4xl font-bold text-blue-700 mb-6">
           🔬 NucleoCR AI
         </h1>
-        <p className="text-gray-500 text-sm mb-8">
-          Votre assistant IA pour la rédaction de comptes rendus
-        </p>
 
-        <form onSubmit={handleLogin} className="space-y-5 text-left">
+        {/* Formulaire */}
+        <form onSubmit={handleLogin} className="space-y-20">
           <input
             type="email"
             placeholder="Adresse e-mail"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
-            className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="
+              mx-auto w-3/5 border border-gray-300 rounded-lg px-3 py-2 
+              focus:outline-none focus:ring-2 focus:ring-blue-500
+            "
           />
+
           <input
             type="password"
             placeholder="Mot de passe"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
-            className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="
+              mx-auto w-3/5 border border-gray-300 rounded-lg px-3 py-2 
+              focus:outline-none focus:ring-2 focus:ring-blue-500
+            "
           />
+
           <button
             type="submit"
             disabled={loading}
-            className={`w-full py-3 rounded-lg font-semibold text-white transition ${
-              loading
-                ? 'bg-blue-300 cursor-not-allowed'
-                : 'bg-blue-600 hover:bg-blue-700'
-            }`}
+            className={`
+              mx-auto w-3/5 py-2 rounded-lg text-white font-semibold transition 
+              ${loading ? 'bg-blue-300 cursor-not-allowed' : 'bg-blue-600 hover:bg-blue-700'}
+            `}
           >
-            {loading ? 'Connexion en cours...' : 'Connexion'}
+            {loading ? 'Connexion …' : 'Connexion'}
           </button>
         </form>
-      </motion.div>
+      </div>
+
+      {/* Bouton “Besoin d’aide ?” en bas à droite */}
+      <button
+        type="button"
+        onClick={showHelpEmail}
+        className="fixed bottom-4 right-4 text-blue-600 hover:underline"
+      >
+        📧 Besoin d’aide ?
+      </button>
     </div>
   );
 };
