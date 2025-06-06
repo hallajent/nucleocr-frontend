@@ -1,4 +1,6 @@
+// src/App.jsx
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import Home from './pages/Home';
 import Login from './pages/Login';
 import Chat from './pages/Chat';
 
@@ -11,9 +13,17 @@ function App() {
   return (
     <Router>
       <Routes>
+        <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/chat" element={<PrivateRoute><Chat /></PrivateRoute>} />
-        <Route path="*" element={<Navigate to="/login" />} />
+        <Route
+          path="/chat"
+          element={
+            <PrivateRoute>
+              <Chat />
+            </PrivateRoute>
+          }
+        />
+        <Route path="*" element={<Navigate to="/" />} />
       </Routes>
     </Router>
   );
