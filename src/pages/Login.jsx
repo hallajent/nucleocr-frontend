@@ -10,6 +10,9 @@ const Login = () => {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
+  // 👇 Forcer git à voir une modification
+  console.log('Chargement de la page Login');
+
   const handleLogin = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -46,7 +49,7 @@ const Login = () => {
           transition={{ delay: 0.2, duration: 0.4 }}
         />
 
-        <h1 className="text-3xl font-bold text-blue-700 mb-1">NucleoCR AI</h1>
+        <h1 className="text-3xl font-bold text-blue-700 mb-1">🔬 NucleoCR AI</h1>
         <p className="text-gray-500 text-sm mb-8">
           Votre assistant IA pour la rédaction de comptes rendus
         </p>
